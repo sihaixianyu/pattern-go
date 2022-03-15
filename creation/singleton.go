@@ -1,9 +1,32 @@
 package creation
 
+import (
+	"sync"
+)
+
 type Singleton struct{}
 
-var singleton *Singleton
+var eagerSingleton *Singleton
+
+var (
+	lazySingleton *Singleton
+	once          = &sync.Once{}
+)
 
 func init() {
-	singleton = &Singleton{}
+	eagerSingleton = &Singleton{}
+}
+
+func GetEagerInstance() *Singleton {
+	return eagerSingleton
+}
+
+func GetLazyInstance() *Singleton {
+	if lazySingleton == nil {
+		once.Do(func() {
+			lazySingleton = &Singleton{}
+		})
+	}
+
+	return lazySingleton
 }
