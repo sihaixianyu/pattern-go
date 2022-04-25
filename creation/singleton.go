@@ -14,15 +14,17 @@ var (
 )
 
 func init() {
+	// Initialize singleton when theis package is imported for the first time
 	eagerSingleton = &Singleton{}
 }
 
-func GetEagerInstance() *Singleton {
+func EagerSingleton() *Singleton {
 	return eagerSingleton
 }
 
-func GetLazyInstance() *Singleton {
+func LazySingleton() *Singleton {
 	if lazySingleton == nil {
+		// Only the first invoke will be executed
 		once.Do(func() {
 			lazySingleton = &Singleton{}
 		})

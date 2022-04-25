@@ -6,14 +6,30 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetEagerInstance(t *testing.T) {
-	assert.Equal(t, GetEagerInstance(), GetEagerInstance())
+func TestEagerSingleton(t *testing.T) {
+	assert.Equal(t, EagerSingleton(), EagerSingleton())
 }
 
-func BenchmarkGetEagerInstanceParalell(b *testing.B) {
+func BenchmarkEagerSingletonParalell(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			if GetEagerInstance() != GetEagerInstance() {
+			singleton := LazySingleton()
+			if EagerSingleton() != singleton {
+				b.Errorf("test failed")
+			}
+		}
+	})
+}
+
+func TestLazySingleton(t *testing.T) {
+	assert.Equal(t, LazySingleton(), LazySingleton())
+}
+
+func BenchmarkLazySingletonParalell(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			singleton := LazySingleton()
+			if LazySingleton() != singleton {
 				b.Errorf("test failed")
 			}
 		}
