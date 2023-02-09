@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGunFactory(t *testing.T) {
+func TestCase1(t *testing.T) {
 	ak47, _ := GetGun("ak47")
 	musket, _ := GetGun("musket")
 

@@ -9,6 +9,17 @@ type Gun interface {
 	getPower() int
 }
 
+func GetGun(gunType string) (Gun, error) {
+	switch gunType {
+	case "ak47":
+		return newAk47(), nil
+	case "musket":
+		return newMusket(), nil
+	default:
+		return nil, fmt.Errorf("wrong gun type: %v passed in", gunType)
+	}
+}
+
 type gun struct {
 	name  string
 	power int
@@ -28,15 +39,4 @@ func (g *gun) setPower(power int) {
 
 func (g *gun) getPower() int {
 	return g.power
-}
-
-func GetGun(gunType string) (Gun, error) {
-	switch gunType {
-	case "ak47":
-		return newAk47(), nil
-	case "musket":
-		return newMusket(), nil
-	default:
-		return nil, fmt.Errorf("wrong gun type: %v passed in", gunType)
-	}
 }
