@@ -1,6 +1,16 @@
 package adapter
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
+
+type Client struct{}
+
+func (c *Client) InsertLightningConnector(com Computer) {
+	fmt.Println("Client inserts Lightning into computer.")
+	com.InsertLightningPort()
+}
 
 func TestAdpater(t *testing.T) {
 	client := &Client{}
