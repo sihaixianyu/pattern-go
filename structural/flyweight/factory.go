@@ -7,11 +7,9 @@ const (
 	CounterTerroristDressType = "ctDress"
 )
 
-var (
-	dressFactorySingleton = &DressFactory{
-		dressMap: make(map[string]Dress),
-	}
-)
+var dressFactorySingleton = &DressFactory{
+	dressMap: make(map[string]Dress),
+}
 
 type DressFactory struct {
 	dressMap map[string]Dress
@@ -22,16 +20,20 @@ func GetDressFactorySingleton() *DressFactory {
 }
 
 func (d *DressFactory) getDressByType(dressType string) (Dress, error) {
-	if d.dressMap != nil {
-		return d.dressMap[dressType], nil
+	if dress, ok := d.dressMap[dressType]; ok {
+		return dress, nil
 	}
 
 	if dressType == TerroristDressType {
-		return NewTerroristDress(), nil
+		dress := NewTerroristDress()
+		d.dressMap[TerroristDressType] = dress
+		return dress, nil
 	}
 
 	if dressType == CounterTerroristDressType {
-		return NewCounterTerroristDress(), nil
+		dress := NewCounterTerroristDress()
+		d.dressMap[CounterTerroristDressType] = dress
+		return dress, nil
 	}
 
 	return nil, fmt.Errorf("Unknown DressType %v", dressType)
