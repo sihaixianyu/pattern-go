@@ -24,11 +24,11 @@ func (o *Originator) RestoreMemento(m *memento) {
 	o.state = m.getSvaedMemento()
 }
 
-func (o *Originator) State() State {
+func (o *Originator) getState() State {
 	return o.state
 }
 
-func (o *Originator) SetState(s State) {
+func (o *Originator) setState(s State) {
 	o.state = s
 }
 
